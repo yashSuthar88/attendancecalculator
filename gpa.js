@@ -127,6 +127,25 @@ function calculateGPA() {
     gradeClassification.textContent = label;
     scaleInfo.textContent = info;
 
+    // Dynamic Color Coding
+    let color = 'var(--primary)';
+    let perfClass = '';
+    if (selectedCountry.name === "United Kingdom") {
+        if (result === "1st" || result === "2:1") { color = 'var(--success)'; perfClass = 'gpa-success'; }
+        else if (result === "2:2") { color = 'var(--warning)'; perfClass = 'gpa-warning'; }
+        else { color = 'var(--danger)'; perfClass = 'gpa-danger'; }
+    } else {
+        if (percentage >= 0.8) { color = 'var(--success)'; perfClass = 'gpa-success'; }
+        else if (percentage >= 0.6) { color = 'var(--warning)'; perfClass = 'gpa-warning'; }
+        else { color = 'var(--danger)'; perfClass = 'gpa-danger'; }
+    }
+
+    gpaResult.classList.remove('gpa-success', 'gpa-warning', 'gpa-danger');
+    if (perfClass) gpaResult.classList.add(perfClass);
+
+    gpaResult.style.color = color;
+    gradeClassification.style.color = color;
+
     // Auto-scroll for mobile/tablet
     if (window.innerWidth <= 1024) {
         setTimeout(() => {

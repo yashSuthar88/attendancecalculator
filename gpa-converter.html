@@ -76,6 +76,34 @@
             line-height: 1;
         }
 
+        .gpa-success {
+            background: none !important;
+            -webkit-text-fill-color: var(--success) !important;
+            color: var(--success);
+        }
+
+        .gpa-warning {
+            background: none !important;
+            -webkit-text-fill-color: var(--warning) !important;
+            color: var(--warning);
+        }
+
+        .gpa-danger {
+            background: none !important;
+            -webkit-text-fill-color: var(--danger) !important;
+            color: var(--danger);
+        }
+
+        .converter-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 14px;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
         .scale-label {
             font-size: 1.1rem;
             color: var(--text-muted);
@@ -186,6 +214,8 @@
                     </div>
 
                     <button id="convert-btn">Convert Grades Now</button>
+                    <p class="converter-note">*This converter uses standard international conversion formulas for
+                        academic evaluation.</p>
                 </div>
             </div>
 
@@ -200,7 +230,7 @@
                 <div id="target-country-badge" class="country-badge">USA</div>
                 <span class="scale-label">Converted GPA</span>
                 <div class="gpa-display" id="converted-gpa">3.40</div>
-                <div id="grade-classification" style="font-weight: 600; color: var(--primary);">Excellent (A)</div>
+                <div id="grade-classification" style="font-weight: 600;">Excellent (A)</div>
                 <p id="scale-info" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted);">Based on
                     standard 4.0 scale conversion formula.</p>
             </div>
