@@ -200,7 +200,8 @@ header {
 }
 
 .nav-links {
-    display: flex;
+    display: none;
+    /* Hidden on all devices in favor of hamburger */
     gap: 22px;
 }
 
@@ -1305,7 +1306,8 @@ button:active {
 /* HAMBURGER MENU       */
 /* ==================== */
 .hamburger {
-    display: none;
+    display: flex;
+    /* Always show hamburger */
     flex-direction: column;
     justify-content: center;
     gap: 5px;
@@ -1342,9 +1344,10 @@ button:active {
     transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* Mobile Nav Overlay */
+/* Navigation Overlay */
 .nav-overlay {
-    display: none;
+    display: block;
+    /* Prepared for all devices */
     position: fixed;
     top: 0;
     left: 0;
@@ -1364,9 +1367,10 @@ button:active {
     pointer-events: all;
 }
 
-/* Mobile Nav Panel */
+/* Fixed Navigation Panel */
 .mobile-nav {
-    display: none;
+    display: flex;
+    /* Prepared for all devices */
     position: fixed;
     top: 0;
     right: -300px;
@@ -1451,14 +1455,6 @@ button:active {
         padding: 20px 24px;
     }
 
-    .nav-links {
-        gap: 14px;
-    }
-
-    .nav-links a {
-        font-size: 13px;
-    }
-
     .features-grid {
         grid-template-columns: 1fr 1fr;
         gap: 16px;
@@ -1480,20 +1476,6 @@ button:active {
 
 /* --- Mobile (up to 768px) --- */
 @media (max-width: 768px) {
-
-    /* Nav: hamburger menu */
-    .hamburger {
-        display: flex;
-    }
-
-    .nav-overlay,
-    .mobile-nav {
-        display: flex;
-    }
-
-    .nav-links {
-        display: none;
-    }
 
     /* Header */
     header {
