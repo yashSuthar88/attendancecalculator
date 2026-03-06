@@ -84,12 +84,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     calculateBtn.addEventListener('click', () => {
         const attended = parseInt(document.getElementById('h-attended').value);
-        const total = parseInt(document.getElementById('h-total').value);
+        const totalRaw = parseInt(document.getElementById('h-total').value);
+        const noAttendanceInput = document.getElementById('h-no-attendance');
+        const noAttendance = noAttendanceInput ? parseInt(noAttendanceInput.value) || 0 : 0;
+        const total = totalRaw - noAttendance;
         const startDateStr = startInput.value;
         const endDateStr = endInput.value;
 
-        if (isNaN(attended) || isNaN(total) || !startDateStr || !endDateStr) {
+        if (isNaN(attended) || isNaN(totalRaw) || !startDateStr || !endDateStr) {
             alert('Please fill in all fields with valid data.');
+            return;
+        }
+
+        if (attended > total) {
+            alert('Attended classes cannot be greater than the effective total held classes.');
+            return;
+        }
+
+        if (total <= 0) {
+            alert('Effective total classes must be greater than zero.');
             return;
         }
 

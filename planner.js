@@ -284,12 +284,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     predictBtn.addEventListener('click', () => {
         let attended = parseInt(attendedInput.value);
-        let total = parseInt(totalInput.value);
+        let totalRaw = parseInt(totalInput.value);
+        const noAttendanceInput = document.getElementById('p-no-attendance');
+        const noAttendance = noAttendanceInput ? parseInt(noAttendanceInput.value) || 0 : 0;
+        const total = totalRaw - noAttendance;
         const goal = parseInt(goalInput.value);
 
-        if (isNaN(attended) || isNaN(total) || isNaN(goal)) { alert('Please enter valid numbers.'); return; }
-        if (attended > total) { alert('Attended cannot be greater than total.'); return; }
-        if (total === 0) { alert('Total cannot be zero.'); return; }
+        if (isNaN(attended) || isNaN(totalRaw) || isNaN(goal)) { alert('Please enter valid numbers.'); return; }
+        if (attended > total) { alert('Attended cannot be greater than the effective total held classes.'); return; }
+        if (total <= 0) { alert('Effective total classes must be greater than zero.'); return; }
 
         const schedule = { 0: 0 };
         for (let i = 1; i <= 6; i++) schedule[i] = parseInt(inputs[i].value) || 0;
