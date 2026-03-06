@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Convert your CGPA to GPA for US, UK, and other countries. Free and accurate GPA converter with support for multiple grading scales.">
+    <meta name="keywords"
+        content="CGPA to GPA converter, US GPA converter, UK GPA conversion, 10 point scale to 4 point scale, credit hours calculator">
+    <meta name="author" content="attendancecalculator.me">
+    <title>CGPA to GPA Converter | Global Grading Scales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="theme.js"></script>
+    <style>
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .country-search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .country-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #16162b;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .country-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .country-item:hover {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--primary);
+        }
+
+        .result-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .gpa-display {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+            line-height: 1;
+        }
+
+        .scale-label {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .country-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 1024px) {
+            .converter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">A</div>
+            attendancecalculator.me
+        </a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="calculator.html">Attendance Calculator</a>
+            <a href="planner.html">Attendance Predictor</a>
+            <a href="holiday.html">Holiday Planner</a>
+            <a href="impact.html">Absence Impact</a>
+            <a href="gpa-converter.html" class="active">GPA Converter</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <div class="nav-section-label">Main</div>
+        <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+
+        <div class="nav-section-label">Attendance Tools</div>
+        <a href="calculator.html"><span class="nav-icon">📊</span> Attendance Calculator</a>
+        <a href="planner.html"><span class="nav-icon">📅</span> Attendance Predictor</a>
+        <a href="holiday.html"><span class="nav-icon">✈️</span> Holiday Planner</a>
+        <a href="impact.html"><span class="nav-icon">📉</span> Absence Impact</a>
+
+        <div class="nav-section-label">Academic Converters</div>
+        <a href="gpa-converter.html" class="active"><span class="nav-icon">🎓</span> GPA Converter</a>
+
+        <div class="nav-section-label">Support</div>
+        <a href="docs.html"><span class="nav-icon">📚</span> How to Use</a>
+        <div class="mobile-nav-footer">
+            <p>attendancecalculator.me</p>
+        </div>
+    </nav>
+
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="main-container">
+        <section class="page-header">
+            <div class="page-badge">Academic Tools</div>
+            <h1>CGPA to GPA Converter</h1>
+            <p>Convert your grades to international standards including US (4.0), UK (Classification), and more.</p>
+        </section>
+
+        <div class="converter-grid">
+            <!-- Input Panel -->
+            <div class="glass">
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="cgpa-input">Enter Your CGPA</label>
+                        <input type="number" id="cgpa-input" placeholder="e.g. 8.5" step="0.01" min="0">
+                    </div>
+
+                    <div class="input-field">
+                        <label for="current-scale">Your Current Scale</label>
+                        <select id="current-scale">
+                            <option value="10">10.0 Scale</option>
+                            <option value="7">7.0 Scale</option>
+                            <option value="5">5.0 Scale</option>
+                            <option value="4">4.0 Scale</option>
+                        </select>
+                    </div>
+
+                    <div class="country-search-container">
+                        <label for="country-search">Target Country System</label>
+                        <input type="text" id="country-search" placeholder="Search country (e.g. USA, UK, Germany...)"
+                            autocomplete="off">
+                        <div class="country-list" id="country-list">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <button id="convert-btn">Convert Grades Now</button>
+                </div>
+            </div>
+
+            <!-- Result Panel -->
+            <div class="glass result-card" id="result-placeholder">
+                <div class="feature-icon">🎓</div>
+                <h2>Ready to Convert</h2>
+                <p>Enter your CGPA and select a country to see the converted result.</p>
+            </div>
+
+            <div class="glass result-card" id="result-display" style="display: none;">
+                <div id="target-country-badge" class="country-badge">USA</div>
+                <span class="scale-label">Converted GPA</span>
+                <div class="gpa-display" id="converted-gpa">3.40</div>
+                <div id="grade-classification" style="font-weight: 600; color: var(--primary);">Excellent (A)</div>
+                <p id="scale-info" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted);">Based on
+                    standard 4.0 scale conversion formula.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-rich">
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">A</div>
+                    <span>attendancecalculator.me</span>
+                </div>
+                <p>The smarter way to manage your attendance and academics. Built for students who value their time and
+                    want to make every class count.</p>
+                <div class="footer-quote">
+                    <p class="quote">"The best way to predict your future is to create it."</p>
+                    <div class="author">— Abraham Lincoln</div>
+                </div>
+            </div>
+            <div class="footer-nav-group">
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="calculator.html">Attendance Calculator</a>
+                    <a href="planner.html">Attendance Predictor</a>
+                    <a href="holiday.html">Holiday Planner</a>
+                    <a href="impact.html">Absence Impact</a>
+                    <a href="gpa-converter.html">GPA Converter</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal & Info</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Preferences</h4>
+                    <div class="theme-switcher">
+                        <button class="theme-btn" data-theme-val="system" title="System Theme">💻</button>
+                        <button class="theme-btn" data-theme-val="light" title="Light Theme">☀️</button>
+                        <button class="theme-btn" data-theme-val="dark" title="Dark Theme">🌙</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 attendancecalculator.me. Crafted with ❤️ for students everywhere.</p>
+        </div>
+    </footer>
+
+    <script src="gpa.js"></script>
+    <script>
+        // Shared Hamburger Logic
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+
+</html>

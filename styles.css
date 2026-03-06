@@ -1385,10 +1385,34 @@ button:active {
     padding: 90px 30px 40px;
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.mobile-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mobile-nav::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.mobile-nav::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .mobile-nav.active {
     right: 0;
+}
+
+.nav-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 20px 18px 8px;
+    opacity: 0.7;
 }
 
 .mobile-nav a {
