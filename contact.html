@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact the team at attendancecalculator.me for support, bug reports, or feature requests.">
+    <meta name="keywords" content="contact attendance calculator, attendance calculator support">
+    <meta name="author" content="attendancecalculator.me">
+    <title>Contact Us | attendancecalculator.me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="theme.js"></script>
+</head>
+
+<body>
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <header>
+        <a class="logo" href="index.html">
+            <div class="logo-icon">A</div> attendancecalculator.me
+        </a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="calculator.html">Attendance Calculator</a>
+            <a href="planner.html">Attendance Predictor</a>
+            <a href="holiday.html">Holiday Planner</a>
+            <a href="impact.html">Absence Impact</a>
+            <a href="docs.html">How to Use</a>
+        </nav>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </header>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+        <a href="calculator.html"><span class="nav-icon">📊</span> Attendance Calculator</a>
+        <a href="planner.html"><span class="nav-icon">📅</span> Attendance Predictor</a>
+        <a href="holiday.html"><span class="nav-icon">✈️</span> Holiday Planner</a>
+        <a href="impact.html"><span class="nav-icon">📉</span> Absence Impact</a>
+        <a href="docs.html"><span class="nav-icon">📚</span> How to Use</a>
+        <div class="mobile-nav-footer">
+            <p>attendancecalculator.me</p>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+        <div class="page-header">
+            <span class="page-badge">✉️ Get In Touch</span>
+            <h1>Contact Us</h1>
+            <p>Have a question, suggestion, or found a bug? We'd love to hear from you.</p>
+        </div>
+
+        <div
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 780px; margin: 0 auto 40px; animation: fadeIn 0.8s ease-out forwards;">
+
+            <!-- Contact Form -->
+            <div class="glass" style="grid-column: 1 / -1;">
+                <h2 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 18px; color: var(--text);">Send Us a
+                    Message</h2>
+                <form id="contact-form" onsubmit="return false;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                        <div class="input-field">
+                            <label for="contact-name">Your Name</label>
+                            <input type="text" id="contact-name" placeholder="e.g. Rahul Sharma">
+                        </div>
+                        <div class="input-field">
+                            <label for="contact-email">Email Address</label>
+                            <input type="email" id="contact-email" placeholder="e.g. rahul@email.com">
+                        </div>
+                    </div>
+                    <div class="input-field" style="margin-bottom: 12px;">
+                        <label for="contact-subject">Subject</label>
+                        <input type="text" id="contact-subject" placeholder="e.g. Feature Request">
+                    </div>
+                    <div class="input-field" style="margin-bottom: 16px;">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" placeholder="Tell us what's on your mind..." rows="5" style="
+                            width: 100%; padding: 14px 16px; background: var(--surface-light);
+                            border: 1px solid var(--border); border-radius: 12px; color: var(--text);
+                            font-family: 'Inter', sans-serif; font-size: 0.92rem; resize: vertical;
+                            transition: border-color 0.3s; outline: none;
+                        "></textarea>
+                    </div>
+                    <button type="button" id="send-message-btn">Send Message 📨</button>
+                </form>
+                <div id="contact-success"
+                    style="display: none; margin-top: 16px; padding: 14px 18px; background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.25); border-radius: 12px; text-align: center;">
+                    <p style="color: var(--success); font-weight: 700; font-size: 0.95rem;">✅ Message sent successfully!
+                        We'll get back to you soon.</p>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="glass" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">📧</div>
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--text);">Email</h3>
+                <p style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">support@attendancecalculator.me
+                </p>
+            </div>
+            <div class="glass" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⏱️</div>
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--text);">Response Time
+                </h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">We usually reply within <strong
+                        style="color: var(--success);">1–2 business days</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rich Footer -->
+    <footer class="footer-rich">
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">A</div>
+                    <span>attendancecalculator.me</span>
+                </div>
+                <p>The smarter way to manage your attendance. Built for students who value their time and want to make
+                    every class count — or know when they can skip.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="calculator.html">Attendance Calculator</a>
+                <a href="planner.html">Attendance Predictor</a>
+                <a href="holiday.html">Holiday Planner</a>
+                <a href="impact.html">Absence Impact</a>
+                <a href="docs.html" style="color: var(--primary); font-weight: 600;">How to Use</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal & Info</h4>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+            <div class="footer-col">
+                <h4>Preferences</h4>
+                <div class="theme-switcher">
+                    <button class="theme-btn" data-theme-val="system" title="System Theme">💻</button>
+                    <button class="theme-btn" data-theme-val="light" title="Light Theme">☀️</button>
+                    <button class="theme-btn" data-theme-val="dark" title="Dark Theme">🌙</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 attendancecalculator.me. Crafted with ❤️ for students everywhere.</p>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Contact form
+        const sendBtn = document.getElementById('send-message-btn');
+        if (sendBtn) {
+            sendBtn.addEventListener('click', () => {
+                const name = document.getElementById('contact-name').value.trim();
+                const email = document.getElementById('contact-email').value.trim();
+                const msg = document.getElementById('contact-message').value.trim();
+                if (!name || !email || !msg) { alert('Please fill in all required fields.'); return; }
+                document.getElementById('contact-form').style.display = 'none';
+                document.getElementById('contact-success').style.display = 'block';
+            });
+        }
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+
+</html>

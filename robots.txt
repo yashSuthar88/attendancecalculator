@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Google AdSense Crawler Exception
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: /sitemap.xml

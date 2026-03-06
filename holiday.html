@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Plan your trips and holidays without ruining your college attendance. Calculate exactly how many classes you will miss and your predicted percentage drop.">
+    <meta name="keywords"
+        content="holiday attendance planner, trip attendance calculator, how much attendance will I lose, college leave calculator, miss classes calculator">
+    <meta name="author" content="attendancecalculator.me">
+    <title>Holiday Attendance Planner | Calculate Missed Classes For Your Trip</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="theme.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">A</div>
+            attendancecalculator.me
+        </a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="calculator.html">Attendance Calculator</a>
+            <a href="planner.html">Attendance Predictor</a>
+            <a href="holiday.html" class="active">Holiday Planner</a>
+            <a href="impact.html">Absence Impact</a>
+            <a href="docs.html">How to Use</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+        <a href="calculator.html"><span class="nav-icon">📊</span> Attendance Calculator</a>
+        <a href="planner.html"><span class="nav-icon">📅</span> Attendance Predictor</a>
+        <a href="holiday.html" class="active"><span class="nav-icon">✈️</span> Holiday Planner</a>
+        <a href="impact.html"><span class="nav-icon">📉</span> Absence Impact</a>
+        <a href="docs.html"><span class="nav-icon">📚</span> How to Use</a>
+        <div class="mobile-nav-footer">
+            <p>attendancecalculator.me</p>
+        </div>
+    </nav>
+
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="page-wrap">
+        <div class="page-header">
+            <span class="page-badge">✈️ Trip Impact Calculator</span>
+            <h1>Holiday Planner</h1>
+            <p>See exactly how a trip will affect your attendance before you go.</p>
+        </div>
+
+        <div class="panels">
+            <!-- Left: Inputs -->
+            <div class="glass">
+                <div class="panel-section">
+                    <h3 class="panel-label">📋 Current Attendance</h3>
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="h-attended">Attended</label>
+                            <input type="number" id="h-attended" min="0" placeholder="e.g. 45">
+                        </div>
+                        <div class="input-field">
+                            <label for="h-total">Total Held</label>
+                            <input type="number" id="h-total" min="1" placeholder="e.g. 60">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <div class="panel-section">
+                    <h3 class="panel-label">📆 Trip Dates</h3>
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="start-date">From (DD/MM/YYYY)</label>
+                            <input type="text" id="start-date" placeholder="DD/MM/YYYY" maxlength="10"
+                                inputmode="numeric">
+                        </div>
+                        <div class="input-field">
+                            <label for="end-date">To (DD/MM/YYYY)</label>
+                            <input type="text" id="end-date" placeholder="DD/MM/YYYY" maxlength="10"
+                                inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <div class="panel-section">
+                    <h3 class="panel-label">⚙️ Schedule Settings</h3>
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="h-weekly-off">Weekly Off Day</label>
+                            <select id="h-weekly-off">
+                                <option value="none" selected>None</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label for="h-saturday-off">Saturday Type</label>
+                            <select id="h-saturday-off">
+                                <option value="none">College Open</option>
+                                <option value="all">Every Sat Off</option>
+                                <option value="odd">Odd Sat Off</option>
+                                <option value="even">Even Sat Off</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <div class="panel-section">
+                    <h3 class="panel-label">🕐 Daily Lecture Slots</h3>
+                    <div class="slots-grid">
+                        <div class="slot-field">
+                            <label for="h-mon">Mon</label>
+                            <input type="number" id="h-mon" min="0" value="4">
+                        </div>
+                        <div class="slot-field">
+                            <label for="h-tue">Tue</label>
+                            <input type="number" id="h-tue" min="0" value="4">
+                        </div>
+                        <div class="slot-field">
+                            <label for="h-wed">Wed</label>
+                            <input type="number" id="h-wed" min="0" value="4">
+                        </div>
+                        <div class="slot-field">
+                            <label for="h-thu">Thu</label>
+                            <input type="number" id="h-thu" min="0" value="4">
+                        </div>
+                        <div class="slot-field">
+                            <label for="h-fri">Fri</label>
+                            <input type="number" id="h-fri" min="0" value="4">
+                        </div>
+                        <div class="slot-field">
+                            <label for="h-sat">Sat</label>
+                            <input type="number" id="h-sat" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: auto;">
+                    <button id="calculate-impact-btn">Calculate Impact ✈️</button>
+                </div>
+            </div>
+
+            <!-- Right: Results -->
+            <div class="glass" style="display: flex; flex-direction: column; height: 100%; justify-content: center;">
+                <div class="result-placeholder" id="result-placeholder" style="transition: all 0.5s ease; width: 100%;">
+                    <div class="placeholder-icon" id="ph-icon" style="transition: all 0.3s ease;">🌴</div>
+                    <h3 id="ph-title" style="transition: all 0.3s ease;">Awaiting Your Trip Details</h3>
+                    <p id="ph-desc" style="transition: all 0.3s ease;">Fill in your data and hit Calculate to see the
+                        impact.</p>
+                </div>
+
+                <div class="holiday-results hidden" id="holiday-results"
+                    style="opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); width: 100%;">
+                    <div class="impact-header" style="display: none;">
+                        <h3>Trip Impact Report</h3>
+                    </div>
+
+                    <div class="impact-big-number">
+                        <span class="impact-drop" id="h-drop">-0%</span>
+                        <span class="impact-drop-label">Attendance Drop</span>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <span class="impact-stat-value" id="h-days-count">0</span>
+                            <span class="impact-stat-label">Trip Days</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-stat-value" id="h-slots-lost">0</span>
+                            <span class="impact-stat-label">Slots Lost</span>
+                        </div>
+                    </div>
+
+                    <div class="impact-comparison">
+                        <div class="comparison-item">
+                            <span class="comparison-label">Before Trip</span>
+                            <div class="comparison-bar-track">
+                                <div class="comparison-bar before-bar" id="before-bar"></div>
+                            </div>
+                            <span class="comparison-value" id="h-before-pct">0%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">After Trip</span>
+                            <div class="comparison-bar-track">
+                                <div class="comparison-bar after-bar" id="after-bar"></div>
+                            </div>
+                            <span class="comparison-value" id="h-after-pct">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="impact-verdict" id="h-verdict"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rich Footer -->
+    <footer class="footer-rich">
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">A</div>
+                    <span>attendancecalculator.me</span>
+                </div>
+                <p>The smarter way to manage your attendance. Built for students who value their time and want to make
+                    every class count — or know when they can skip.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="calculator.html">Attendance Calculator</a>
+                <a href="planner.html">Attendance Predictor</a>
+                <a href="holiday.html">Holiday Planner</a>
+                <a href="impact.html">Absence Impact</a>
+                <a href="docs.html" style="color: var(--primary); font-weight: 600;">How to Use</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal & Info</h4>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+            <div class="footer-col">
+                <h4>Preferences</h4>
+                <div class="theme-switcher">
+                    <button class="theme-btn" data-theme-val="system" title="System Theme">💻</button>
+                    <button class="theme-btn" data-theme-val="light" title="Light Theme">☀️</button>
+                    <button class="theme-btn" data-theme-val="dark" title="Dark Theme">🌙</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 attendancecalculator.me. Crafted with ❤️ for students everywhere.</p>
+        </div>
+    </footer>
+
+    <script src="holiday.js"></script>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+
+</html>

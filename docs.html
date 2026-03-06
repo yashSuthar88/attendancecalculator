@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Learn how to use the Attendance Calculator, Predictor, and Holiday Planner with this step-by-step guide.">
+    <meta name="keywords" content="how to use attendance calculator, attendance calculator tutorial, help guide">
+    <meta name="author" content="attendancecalculator.me">
+    <title>How to Use | attendancecalculator.me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .docs-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .doc-section {
+            margin-bottom: 50px;
+        }
+
+        .doc-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .doc-section p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .doc-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .doc-section li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .doc-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: rgba(129, 140, 248, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">A</div>
+            attendancecalculator.me
+        </a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="calculator.html">Attendance Calculator</a>
+            <a href="planner.html">Attendance Predictor</a>
+            <a href="holiday.html">Holiday Planner</a>
+            <a href="impact.html">Absence Impact</a>
+            <a href="docs.html" class="active">How to Use</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+        <a href="calculator.html"><span class="nav-icon">📊</span> Attendance Calculator</a>
+        <a href="planner.html"><span class="nav-icon">📅</span> Attendance Predictor</a>
+        <a href="holiday.html"><span class="nav-icon">✈️</span> Holiday Planner</a>
+        <a href="impact.html"><span class="nav-icon">📉</span> Absence Impact</a>
+        <a href="docs.html" class="active"><span class="nav-icon">📚</span> How to Use</a>
+        <div class="mobile-nav-footer">
+            <p>attendancecalculator.me</p>
+        </div>
+    </nav>
+
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="page-wrap docs-container" style="z-index: 10; position: relative;">
+        <div class="page-header" style="text-align: left; margin-bottom: 60px;">
+            <span class="page-badge">📚 How to Use Guide</span>
+            <h1 style="text-align: left;">How to Use</h1>
+            <p>Welcome to the official user guide for attendancecalculator.me. Learn how to get the most out of our
+                tools.</p>
+        </div>
+
+        <section class="doc-section glass">
+            <h2>📊 Attendance Calculator</h2>
+            <p>The Attendance Calculator gives you an immediate snapshot of where you stand and whether you have
+                room to
+                miss your next class.</p>
+            <ul>
+                <li><strong>Attended:</strong> Enter the exact number of classes you have been present for.</li>
+                <li><strong>Total Held:</strong> Enter how many classes have happened so far.</li>
+                <li><strong>Target Attendance:</strong> Set the minimum percentage you need to maintain (e.g., 75%).
+                </li>
+            </ul>
+            <div class="highlight-box">
+                <strong>Pro Tip:</strong> The calculator instantly tells you exactly how many upcoming consecutive
+                classes you can safely skip, or exactly how many you must attend to catch up.
+            </div>
+        </section>
+
+        <section class="doc-section glass">
+            <h2>📅 Attendance Predictor</h2>
+            <p>The Attendance Predictor is a predictive tool. It uses your regular weekly timetable to project the exact
+                date
+                in the future when your attendance goal will be reached.</p>
+            <ul>
+                <li><strong>Timetable:</strong> Fill in the number of lectures you have on each specific day of the
+                    week.</li>
+                <li><strong>Weekly Off Day:</strong> Automatically zeroes out a specific day if your college is
+                    always
+                    closed.</li>
+                <li><strong>Saturday Type:</strong> Handle tricky schedules by telling the system if your college is
+                    off
+                    on all Saturdays, odd Saturdays, or even Saturdays.</li>
+                <li><strong>Public Holidays:</strong> Add any upcoming unpredicted holidays so the system doesn't
+                    count
+                    them as lecture days!</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>How it works:</strong> The engine simulates moving forward day-by-day based on your daily
+                slots,
+                continuously checking your percentage until it hits your target goal.
+            </div>
+        </section>
+
+        <section class="doc-section glass">
+            <h2>✈️ Holiday Planner</h2>
+            <p>Planning a trip but worried about how much it will hurt your attendance? The Holiday Planner
+                calculates
+                the precise drop.</p>
+            <ul>
+                <li><strong>Trip Dates:</strong> Select your departure and return dates.</li>
+                <li><strong>Daily Slots:</strong> Same as the Attendance Predictor, enter your default daily class
+                    count.
+                </li>
+                <li><strong>Schedule Settings:</strong> The planner intelligently ignores your college off-days and
+                    weekend rules so it doesn't over-punish you for a trip!</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>The Verdict:</strong> The system will give you a color-coded "Impact Verdict" letting you
+                know
+                if the trip's damage to your record is Low, Moderate, or High.
+            </div>
+        </section>
+    </div>
+
+    <!-- Rich Footer -->
+    <footer class="footer-rich">
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">A</div>
+                    <span>attendancecalculator.me</span>
+                </div>
+                <p>The smarter way to manage your attendance. Built for students who value their time and want to make
+                    every class count — or know when they can skip.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="calculator.html">Attendance Calculator</a>
+                <a href="planner.html">Attendance Predictor</a>
+                <a href="holiday.html">Holiday Planner</a>
+                <a href="impact.html">Absence Impact</a>
+                <a href="docs.html" style="color: var(--primary); font-weight: 600;">How to Use</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal & Info</h4>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+            <div class="footer-col">
+                <h4>Preferences</h4>
+                <div class="theme-switcher">
+                    <button class="theme-btn" data-theme-val="system" title="System Theme">💻</button>
+                    <button class="theme-btn" data-theme-val="light" title="Light Theme">☀️</button>
+                    <button class="theme-btn" data-theme-val="dark" title="Dark Theme">🌙</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 attendancecalculator.me. Crafted with ❤️ for students everywhere.</p>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+    </script>
+    <script src="cookie-consent.js"></script>
+</body>
+
+</html>
