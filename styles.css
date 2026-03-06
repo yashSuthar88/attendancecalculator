@@ -197,14 +197,16 @@ header {
     font-family: 'Inter', sans-serif;
     font-size: 8px;
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: 2.1px;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 1px;
     opacity: 0.8;
     line-height: 1;
     font-style: italic;
     text-align: left;
+    display: block;
+    width: 100%;
 }
 
 @keyframes gradientShift {
@@ -1540,7 +1542,7 @@ button:active {
 
     .logo-tagline {
         font-size: 6.5px;
-        letter-spacing: 0.8px;
+        letter-spacing: 0.4px;
     }
 
     .logo-icon {
