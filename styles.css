@@ -167,6 +167,18 @@ header {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-name {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-size: 32px;
     font-weight: 700;
@@ -176,11 +188,20 @@ header {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
     animation: gradientShift 4s ease infinite;
+    line-height: 1.1;
+}
+
+.logo-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 2px;
+    opacity: 0.8;
+    line-height: 1;
 }
 
 @keyframes gradientShift {
@@ -1503,19 +1524,27 @@ button:active {
 
     /* Header */
     header {
-        padding: 12px 16px;
+        padding: 8px 12px;
     }
 
     .logo {
-        font-size: 24px;
-        gap: 8px;
+        gap: 6px;
+    }
+
+    .logo-name {
+        font-size: 20px;
+    }
+
+    .logo-tagline {
+        font-size: 6.5px;
+        letter-spacing: 0.8px;
     }
 
     .logo-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 15px;
-        border-radius: 8px;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        border-radius: 6px;
     }
 
     /* Page containers */
