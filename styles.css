@@ -1163,24 +1163,47 @@ button:active {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 35px;
-        padding: 40px 20px;
+        gap: 25px;
+        padding: 35px 20px;
     }
 
     .footer-brand {
         text-align: center;
         max-width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    .footer-brand p {
+        margin-bottom: 0;
     }
 
     .footer-nav-group {
         width: 100%;
-        justify-content: center;
-        gap: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        margin-top: 5px;
+        text-align: center;
     }
 
+    /* Target specific columns inside nav group on mobile */
     .footer-col {
         align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .footer-nav-group>.footer-col:nth-child(3) {
+        /* Preferences */
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-nav-group>.footer-col:nth-child(3) .theme-switcher {
+        justify-content: center;
+        width: 100%;
+        margin-top: 5px;
     }
 
     .footer-logo {
