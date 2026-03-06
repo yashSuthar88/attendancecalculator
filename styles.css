@@ -1113,6 +1113,7 @@ button:active {
     z-index: 20;
     background: rgba(10, 10, 15, 0.8);
     border-top: 1px solid var(--border);
+    margin-top: auto;
 }
 
 .footer-content {
