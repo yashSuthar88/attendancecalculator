@@ -1034,6 +1034,41 @@ button:active {
     flex-direction: column;
     gap: 10px;
     padding: 25px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(6, 182, 212, 0.15);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover .feature-icon {
+    transform: translateY(-5px) scale(1.1);
+    background: rgba(6, 182, 212, 0.2);
+    color: var(--primary);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
 }
 
 .feature-icon {
@@ -1046,12 +1081,17 @@ button:active {
     align-items: center;
     font-size: 20px;
     margin-bottom: 4px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
 }
 
 .feature-card h2 {
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--text);
+    position: relative;
+    z-index: 2;
 }
 
 .feature-card p {
@@ -1059,10 +1099,14 @@ button:active {
     font-size: 0.85rem;
     line-height: 1.6;
     margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
 }
 
 .feature-card a {
     margin-top: auto;
+    position: relative;
+    z-index: 2;
 }
 
 /* How It Works */
@@ -1081,6 +1125,21 @@ button:active {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(6, 182, 212, 0.15);
+}
+
+.step:hover .step-number {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
 }
 
 .step-number {
@@ -1096,6 +1155,7 @@ button:active {
     font-size: 17px;
     margin: 0 auto 14px;
     flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .step h3 {
@@ -2276,28 +2336,37 @@ button:active {
     --border-hover: rgba(0, 0, 0, 0.15);
     --primary: #0284c7;
     --primary-hover: #0369a1;
-    --accent: #8b5cf6;
+    --accent: #6366f1;
     --text: #0f172a;
     --text-muted: #475569;
     --gradient-text: #0284c7;
-    --logo-gradient: none;
+    --logo-gradient: linear-gradient(135deg, #0284c7, #6366f1, #0ea5e9);
     --shadow-lg: rgba(0, 0, 0, 0.05);
     --shadow-hover: rgba(0, 0, 0, 0.08);
 }
 
-/* Remove glows and gradients for light theme */
+/* Remove glows and main heading gradients for light theme */
 :root[data-theme="light"] .glow {
     display: none;
 }
 
 :root[data-theme="light"] .hero h1,
-:root[data-theme="light"] .page-header h1,
-:root[data-theme="light"] .logo,
-:root[data-theme="light"] .footer-logo span {
+:root[data-theme="light"] .page-header h1 {
     background: none !important;
     -webkit-text-fill-color: #0f172a !important;
     color: #0f172a !important;
     animation: none !important;
+}
+
+/* Enabled new vibrant gradient for logo in light theme */
+:root[data-theme="light"] .logo,
+:root[data-theme="light"] .footer-logo span {
+    background: var(--logo-gradient) !important;
+    background-size: 200% 200% !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: gradientShift 4s ease infinite !important;
 }
 
 /* Specific solid primary color for main branding keyword if any */
@@ -2315,12 +2384,12 @@ button:active {
     border-bottom: 2px solid #f1f5f9;
 }
 
-/* Solid icon background */
+/* Refined logo icon for light theme */
 :root[data-theme="light"] .logo-icon {
-    background: #f1f5f9 !important;
-    border: 2px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(2, 132, 199, 0.2) !important;
     color: #0284c7 !important;
-    box-shadow: none !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08) !important;
 }
 
 :root[data-theme="light"] .mobile-nav {
