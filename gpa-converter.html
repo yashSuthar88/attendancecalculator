@@ -9,7 +9,7 @@
     <meta name="keywords"
         content="CGPA to GPA converter, US GPA converter, UK GPA conversion, 10 point scale to 4 point scale, credit hours calculator">
     <meta name="author" content="attendancecalculator.me">
-    <title>CGPA to GPA Converter | Global Grading Scales</title>
+    <title>CGPA to Percentage Converter | Indian University Formulas</title>
     <link rel="stylesheet" href="styles.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
@@ -34,12 +34,14 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: #16162b;
+            background: var(--surface);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--border);
             border-radius: 12px;
             max-height: 200px;
             overflow-y: auto;
-            z-index: 10;
+            z-index: 1000;
             display: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
@@ -181,8 +183,9 @@
     <div class="main-container">
         <section class="page-header">
             <div class="page-badge">Academic Converters</div>
-            <h1>CGPA to GPA Converter</h1>
-            <p>Convert your grades to international standards including US (4.0), UK (Classification), and more.</p>
+            <h1>CGPA to Percentage Converter</h1>
+            <p>Convert your CGPA to equivalent percentage using official formulas of major Indian boards and
+                universities.</p>
         </section>
 
         <div class="converter-grid">
@@ -205,8 +208,8 @@
                     </div>
 
                     <div class="country-search-container">
-                        <label for="country-search">Target Country System</label>
-                        <input type="text" id="country-search" placeholder="Search country (e.g. USA, UK, Germany...)"
+                        <label for="country-search">Board / University System</label>
+                        <input type="text" id="country-search" placeholder="Search Board (e.g. CBSE, VTU, Mumbai...)"
                             autocomplete="off">
                         <div class="country-list" id="country-list">
                             <!-- Populated via JS -->
@@ -221,18 +224,18 @@
 
             <!-- Result Panel -->
             <div class="glass result-card" id="result-placeholder">
-                <div class="feature-icon">🎓</div>
-                <h2>Ready to Convert</h2>
-                <p>Enter your CGPA and select a country to see the converted result.</p>
+                <div class="feature-icon">📊</div>
+                <h2>Calculate Percentage</h2>
+                <p>Select your University or Board to see the exact percentage conversion.</p>
             </div>
 
             <div class="glass result-card" id="result-display" style="display: none;">
-                <div id="target-country-badge" class="country-badge">USA</div>
-                <span class="scale-label">Converted GPA</span>
-                <div class="gpa-display" id="converted-gpa">3.40</div>
-                <div id="grade-classification" style="font-weight: 600;">Excellent (A)</div>
-                <p id="scale-info" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted);">Based on
-                    standard 4.0 scale conversion formula.</p>
+                <div id="target-country-badge" class="country-badge">CBSE</div>
+                <span class="scale-label">Equivalent Percentage</span>
+                <div class="gpa-display" id="converted-gpa">80.75%</div>
+                <div id="grade-classification" style="font-weight: 600;">First Class with Distinction</div>
+                <p id="scale-info" style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted);">Formula: CGPA
+                    × 9.5</p>
             </div>
         </div>
     </div>
@@ -260,6 +263,7 @@
                     <a href="holiday.html">Holiday Planner</a>
                     <a href="impact.html">Absence Impact</a>
                     <a href="gpa-converter.html">GPA Converter</a>
+                    <a href="docs.html" style="color: var(--primary); font-weight: 600;">How to Use</a>
                 </div>
                 <div class="footer-col">
                     <h4>Legal & Info</h4>
