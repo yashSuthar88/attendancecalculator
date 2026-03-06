@@ -168,9 +168,16 @@ header {
 
 .logo {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    text-decoration: none;
+}
+
+.logo-brand {
+    display: flex;
     align-items: center;
     gap: 12px;
-    text-decoration: none;
 }
 
 .logo-text {
@@ -196,7 +203,7 @@ header {
 
 .logo-tagline {
     font-family: 'Inter', sans-serif;
-    font-size: 8px;
+    font-size: 9.4px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -1548,7 +1555,7 @@ button:active {
     }
 
     .logo-tagline {
-        font-size: 6.5px;
+        font-size: 5.8px;
     }
 
     .logo-icon {
