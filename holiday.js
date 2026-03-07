@@ -349,19 +349,29 @@ document.addEventListener('DOMContentLoaded', () => {
         dropEl.style.color = drop > 10 ? '#dc2626' : drop > 5 ? '#f59e0b' : '#10b981';
 
         const verdict = document.getElementById('h-verdict');
+        let verdictHtml = '';
+        let verdictClass = '';
+
         if (drop > 10) {
-            verdict.className = 'impact-verdict verdict-danger';
-            verdict.innerHTML = `<strong>⚠️ High Impact!</strong> Your attendance will drop significantly. You'll start the trip with ${startPct.toFixed(1)}% and end with ${finalPct.toFixed(1)}%.`;
+            verdictClass = 'impact-verdict verdict-danger';
+            verdictHtml = `<strong>⚠️ High Impact!</strong> Your attendance will drop significantly. You'll start the trip with ${startPct.toFixed(1)}% and end with ${finalPct.toFixed(1)}%.`;
         } else if (drop > 5) {
-            verdict.className = 'impact-verdict verdict-warning';
-            verdict.innerHTML = `<strong>⚡ Moderate Impact.</strong> You'll go from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%. Be careful!`;
+            verdictClass = 'impact-verdict verdict-warning';
+            verdictHtml = `<strong>⚡ Moderate Impact.</strong> You'll go from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%. Be careful!`;
         } else if (lostSlots === 0) {
-            verdict.className = 'impact-verdict verdict-safe';
-            verdict.innerHTML = `<strong>🎉 Zero Impact!</strong> No classes fall on your trip dates. You'll stay at ${startPct.toFixed(1)}%. Enjoy!`;
+            verdictClass = 'impact-verdict verdict-safe';
+            verdictHtml = `<strong>🎉 Zero Impact!</strong> No classes fall on your trip dates. You'll stay at ${startPct.toFixed(1)}%. Enjoy!`;
         } else {
-            verdict.className = 'impact-verdict verdict-safe';
-            verdict.innerHTML = `<strong>✅ Low Impact.</strong> Manageable drop from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%.`;
+            verdictClass = 'impact-verdict verdict-safe';
+            verdictHtml = `<strong>✅ Low Impact.</strong> Manageable drop from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%.`;
         }
+
+        if (finalPct < 75) {
+            verdictHtml += `<br><span style="display: block; margin-top: 8px; color: #dc2626; font-weight: 600;">⚠️ Suggestion: You should attend your remaining classes to stay above 75%.</span>`;
+        }
+
+        verdict.className = verdictClass;
+        verdict.innerHTML = verdictHtml;
 
         setTimeout(() => { holidayResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
     });
