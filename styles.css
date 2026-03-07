@@ -199,14 +199,16 @@ header {
     width: 34px;
     height: 34px;
     object-fit: contain;
-    background: #f8fafc;
-    padding: 5px;
+    background: var(--logo-gradient, linear-gradient(135deg, #06b6d4, #a78bfa, #3b82f6));
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+    padding: 6px;
     border-radius: 9px;
     box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.08),
-        0 0 8px rgba(6, 182, 212, 0.2);
+        0 0 10px rgba(6, 182, 212, 0.25);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo:hover .logo-img {
