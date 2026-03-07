@@ -3,6 +3,147 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultPlaceholder = document.getElementById('result-placeholder');
     const holidayResults = document.getElementById('holiday-results');
 
+    // ==========================================
+    // Dynamic Public Holidays (India)
+    // ==========================================
+    const allHolidays = [
+        { month: 0, day: 1, name: 'New Year', value: '01-01' },
+        { month: 0, day: 14, name: 'Makar Sankranti', value: '01-14' },
+        { month: 0, day: 26, name: 'Republic Day', value: '01-26' },
+        { month: 1, day: 15, name: 'Maha Shivaratri', value: '02-15' },
+        { month: 2, day: 4, name: 'Holi (Dhuleti)', value: '03-04' },
+        { month: 2, day: 21, name: 'Ramjan-Id (Eid-ul-Fitr)', value: '03-21' },
+        { month: 2, day: 26, name: 'Shree Ram Navmi', value: '03-26' },
+        { month: 2, day: 31, name: 'Mahavir Janma Kalyanak', value: '03-31' },
+        { month: 3, day: 3, name: 'Good Friday', value: '04-03' },
+        { month: 3, day: 14, name: 'Ambedkar Jayanti', value: '04-14' },
+        { month: 4, day: 1, name: 'Gujarat Day / Labour Day', value: '05-01' },
+        { month: 4, day: 27, name: 'Id-ul-Zuha (Bakri Id)', value: '05-27' },
+        { month: 5, day: 26, name: 'Muharram', value: '06-26' },
+        { month: 7, day: 15, name: 'Independence Day', value: '08-15' },
+        { month: 7, day: 26, name: 'Id-e-Milad', value: '08-26' },
+        { month: 9, day: 2, name: 'Gandhi Jayanti', value: '10-02' },
+        { month: 10, day: 8, name: 'Diwali', value: '11-08' },
+        { month: 11, day: 25, name: 'Christmas', value: '12-25' },
+        { month: 11, day: 31, name: 'New Year\'s Eve', value: '12-31' }
+    ];
+
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const startInput = document.getElementById('start-date');
+    const endInput = document.getElementById('end-date');
+    const collegeInput = document.getElementById('college-holiday-input');
+
+    function buildHolidayList() {
+        const container = document.getElementById('holidays-list');
+        if (!container) return;
+
+        const startStr = startInput ? startInput.value : '';
+        const endStr = endInput ? endInput.value : '';
+        const startDate = parseDDMMYYYY(startStr);
+        const endDate = parseDDMMYYYY(endStr);
+
+        // If dates aren't valid yet, just show current/next few months like before or empty?
+        // Let's show months between start and end date if they exist.
+
+        const currentYear = new Date().getFullYear();
+
+        let targetMonths = [];
+        if (startDate && endDate && endDate >= startDate) {
+            let curr = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+            let end = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+            while (curr <= end) {
+                targetMonths.push({ month: curr.getMonth(), year: curr.getFullYear() });
+                curr.setMonth(curr.getMonth() + 1);
+            }
+        }
+
+        if (targetMonths.length === 0) {
+            const today = new Date();
+            targetMonths.push({ month: today.getMonth(), year: today.getFullYear() });
+        }
+
+        let html = '';
+        let idCounter = 0;
+
+        targetMonths.forEach(tm => {
+            const hols = allHolidays.filter(h => h.month === tm.month);
+            if (hols.length === 0) return;
+
+            const label = tm.year !== currentYear ? `${monthNames[tm.month]} ${tm.year}` : monthNames[tm.month];
+
+            html += `<h4 class="month-title">${label}</h4><div class="checkbox-grid">`;
+            hols.forEach(h => {
+                const uid = `h-hol-${idCounter++}`;
+                const mm = String(h.month + 1).padStart(2, '0');
+                const dd = String(h.day).padStart(2, '0');
+                const val = `${tm.year}-${mm}-${dd}`;
+                html += `<div class="checkbox-wrapper small"><input type="checkbox" class="holiday-checkbox" id="${uid}" value="${val}"><label for="${uid}">${h.name} (${monthShort[h.month]} ${h.day})</label></div>`;
+            });
+            html += `</div>`;
+        });
+
+        if (!html) {
+            container.innerHTML = '<p style="font-size: 0.82rem; color: var(--text-muted); text-align: center; padding: 10px;">No public holidays found in these months.</p>';
+        } else {
+            container.innerHTML = html;
+        }
+    }
+
+    if (startInput && endInput) {
+        startInput.addEventListener('change', buildHolidayList);
+        endInput.addEventListener('change', buildHolidayList);
+        const checkUpdate = (e) => { if (e.target.value.length === 10) buildHolidayList(); };
+        startInput.addEventListener('input', checkUpdate);
+        endInput.addEventListener('input', checkUpdate);
+    }
+
+    buildHolidayList();
+
+    const accordionHeader = document.getElementById('holidays-toggle');
+    const accordionContent = document.getElementById('holidays-content');
+    if (accordionHeader && accordionContent) {
+        accordionHeader.addEventListener('click', () => {
+            accordionHeader.classList.toggle('active');
+            accordionContent.classList.toggle('open');
+        });
+    }
+
+    // ==========================================
+    // College Holidays
+    // ==========================================
+    const collegeHolidays = [];
+    const addCollegeBtn = document.getElementById('add-college-holiday');
+    const collegeList = document.getElementById('college-holidays-list');
+
+    function renderCollegeTags() {
+        if (!collegeList) return;
+        collegeList.innerHTML = collegeHolidays.map((dateStr, i) => {
+            const [y, m, d] = dateStr.split('-');
+            return `<span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 8px; font-size: 0.82rem; color: var(--primary); font-weight: 600;">${d}/${m}/${y}<span class="remove-college-hol" data-index="${i}" style="cursor: pointer; font-size: 1rem; line-height: 1; color: var(--text-muted);">&times;</span></span>`;
+        }).join('');
+        collegeList.querySelectorAll('.remove-college-hol').forEach(btn => {
+            btn.addEventListener('click', () => { collegeHolidays.splice(parseInt(btn.dataset.index), 1); renderCollegeTags(); });
+        });
+    }
+
+    if (addCollegeBtn && collegeInput) {
+        addCollegeBtn.addEventListener('click', () => {
+            const val = collegeInput.value.trim();
+            const parsed = parseDDMMYYYY(val);
+            if (!parsed) { alert('Please enter a valid date in DD/MM/YYYY format.'); return; }
+            const mm = String(parsed.getMonth() + 1).padStart(2, '0');
+            const dd = String(parsed.getDate()).padStart(2, '0');
+            const iso = `${parsed.getFullYear()}-${mm}-${dd}`;
+            if (collegeHolidays.includes(iso)) { alert('Already added.'); return; }
+            collegeHolidays.push(iso);
+            collegeInput.value = '';
+            renderCollegeTags();
+        });
+        collegeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addCollegeBtn.click(); } });
+    }
+
     // DD/MM/YYYY helpers
     function formatDateDDMMYYYY(date) {
         const dd = String(date.getDate()).padStart(2, '0');
@@ -17,39 +158,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = parseInt(parts[0], 10);
         const month = parseInt(parts[1], 10) - 1;
         const year = parseInt(parts[2], 10);
-        if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
         const d = new Date(year, month, day);
         if (d.getFullYear() !== year || d.getMonth() !== month || d.getDate() !== day) return null;
         return d;
     }
 
-    // Auto-format DD/MM/YYYY as user types
+    // Auto-format DD/MM/YYYY
     function autoFormatDate(input) {
+        if (!input) return;
         input.addEventListener('input', function (e) {
             let val = this.value.replace(/[^\d]/g, '');
             if (val.length > 8) val = val.slice(0, 8);
-            if (val.length >= 5) {
-                val = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
-            } else if (val.length >= 3) {
-                val = val.slice(0, 2) + '/' + val.slice(2);
-            }
+            if (val.length >= 5) val = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
+            else if (val.length >= 3) val = val.slice(0, 2) + '/' + val.slice(2);
             this.value = val;
         });
     }
 
-    const startInput = document.getElementById('start-date');
-    const endInput = document.getElementById('end-date');
-
     autoFormatDate(startInput);
     autoFormatDate(endInput);
+    autoFormatDate(collegeInput);
 
     // Set default dates
     const today = new Date();
     const nextWeek = new Date();
     nextWeek.setDate(today.getDate() + 5);
-
-    startInput.value = formatDateDDMMYYYY(today);
-    endInput.value = formatDateDDMMYYYY(nextWeek);
+    if (startInput) startInput.value = formatDateDDMMYYYY(today);
+    if (endInput) endInput.value = formatDateDDMMYYYY(nextWeek);
 
     const inputs = {
         1: document.getElementById('h-mon'),
@@ -87,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalRaw = parseInt(document.getElementById('h-total').value);
         const noAttendanceInput = document.getElementById('h-no-attendance');
         const noAttendance = noAttendanceInput ? parseInt(noAttendanceInput.value) || 0 : 0;
-        const total = totalRaw - noAttendance;
+        const currentTotal = totalRaw - noAttendance;
         const startDateStr = startInput.value;
         const endDateStr = endInput.value;
 
@@ -96,13 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (attended > total) {
+        if (attended > currentTotal) {
             alert('Attended classes cannot be greater than the effective total held classes.');
-            return;
-        }
-
-        if (total <= 0) {
-            alert('Effective total classes must be greater than zero.');
             return;
         }
 
@@ -110,130 +240,130 @@ document.addEventListener('DOMContentLoaded', () => {
         const endDate = parseDDMMYYYY(endDateStr);
 
         if (!startDate || !endDate) {
-            alert('Please enter valid dates in DD/MM/YYYY format.');
+            alert('Please enter valid dates.');
             return;
         }
 
-        if (endDate < startDate) {
-            alert('End date cannot be before start date!');
-            return;
-        }
+        if (endDate < startDate) { alert('End date cannot be before start date!'); return; }
 
-        const timetable = {
+        const schedule = {
             1: parseInt(document.getElementById('h-mon').value) || 0,
             2: parseInt(document.getElementById('h-tue').value) || 0,
             3: parseInt(document.getElementById('h-wed').value) || 0,
             4: parseInt(document.getElementById('h-thu').value) || 0,
             5: parseInt(document.getElementById('h-fri').value) || 0,
             6: parseInt(document.getElementById('h-sat').value) || 0,
-            0: 0 // Sunday always 0
+            0: 0
         };
 
-        let lostSlots = 0;
-        let currentDate = new Date(startDate);
-        let daysCount = 0;
+        const holidayCheckboxes = document.querySelectorAll('.holiday-checkbox:checked');
+        const activeHolidays = Array.from(holidayCheckboxes).map(cb => cb.value);
+        collegeHolidays.forEach(d => { if (!activeHolidays.includes(d)) activeHolidays.push(d); });
 
         let weeklyOffDay = weeklyOff ? weeklyOff.value : 'none';
         let satOffType = saturdayOff ? saturdayOff.value : 'none';
 
-        while (currentDate <= endDate) {
-            const dayOfWeek = currentDate.getDay();
-            let slotsToday = timetable[dayOfWeek];
-
-            if (weeklyOffDay !== 'none' && dayOfWeek === parseInt(weeklyOffDay)) slotsToday = 0;
+        function getSlotsOnDate(date) {
+            const dayOfWeek = date.getDay();
+            let slots = schedule[dayOfWeek];
+            if (weeklyOffDay !== 'none' && dayOfWeek === parseInt(weeklyOffDay)) slots = 0;
             if (dayOfWeek === 6 && weeklyOffDay !== '6' && satOffType !== 'none') {
-                if (satOffType === 'all') { slotsToday = 0; }
+                if (satOffType === 'all') slots = 0;
                 else {
-                    const weekOfMonth = Math.ceil(currentDate.getDate() / 7);
-                    if (satOffType === 'odd' && weekOfMonth % 2 !== 0) slotsToday = 0;
-                    else if (satOffType === 'even' && weekOfMonth % 2 === 0) slotsToday = 0;
+                    const weekOfMonth = Math.ceil(date.getDate() / 7);
+                    if (satOffType === 'odd' && weekOfMonth % 2 !== 0) slots = 0;
+                    else if (satOffType === 'even' && weekOfMonth % 2 === 0) slots = 0;
                 }
             }
-
-            lostSlots += slotsToday;
-            currentDate.setDate(currentDate.getDate() + 1);
-            daysCount++;
+            if (slots > 0) {
+                const cm = String(date.getMonth() + 1).padStart(2, '0');
+                const cd = String(date.getDate()).padStart(2, '0');
+                const cy = date.getFullYear();
+                if (activeHolidays.includes(cy + '-' + cm + '-' + cd)) slots = 0;
+            }
+            return slots;
         }
 
-        const currentPct = (attended / total) * 100;
-        const newTotal = total + lostSlots;
-        const newPct = (attended / newTotal) * 100;
-        const drop = currentPct - newPct;
+        // 1. Calculate attendance on start date (assuming full attendance until then)
+        let tempToday = new Date();
+        tempToday.setHours(0, 0, 0, 0);
+        let futureAttended = attended;
+        let futureTotal = currentTotal;
 
-        // Animate placeholder to results header
+        let calcDate = new Date(tempToday);
+        calcDate.setDate(calcDate.getDate() + 1); // Start from tomorrow
+
+        while (calcDate < startDate) {
+            const s = getSlotsOnDate(calcDate);
+            futureAttended += s;
+            futureTotal += s;
+            calcDate.setDate(calcDate.getDate() + 1);
+        }
+
+        const startPct = (futureAttended / futureTotal) * 100;
+
+        // 2. Calculate impact of the trip
+        let lostSlots = 0;
+        let tripDays = 0;
+        calcDate = new Date(startDate);
+        while (calcDate <= endDate) {
+            lostSlots += getSlotsOnDate(calcDate);
+            tripDays++;
+            calcDate.setDate(calcDate.getDate() + 1);
+        }
+
+        const finalTotal = futureTotal + lostSlots;
+        const finalPct = (futureAttended / finalTotal) * 100;
+        const drop = startPct - finalPct;
+
+        // Show results
         if (resultPlaceholder && !resultPlaceholder.classList.contains('calculated')) {
             resultPlaceholder.classList.add('calculated');
-            const phIcon = document.getElementById('ph-icon');
-            const phTitle = document.getElementById('ph-title');
-            const phDesc = document.getElementById('ph-desc');
-
+            const phIcon = document.getElementById('ph-icon'), phTitle = document.getElementById('ph-title'), phDesc = document.getElementById('ph-desc');
             if (phIcon && phDesc && phTitle) {
-                phIcon.style.opacity = '0';
-                phIcon.style.transform = 'scale(0.5) translateY(-20px)';
-                phDesc.style.opacity = '0';
-                phDesc.style.transform = 'translateY(10px) scale(0.9)';
-
+                phIcon.style.opacity = '0'; phDesc.style.opacity = '0';
                 setTimeout(() => {
-                    phIcon.style.display = 'none';
-                    phDesc.style.display = 'none';
-
+                    phIcon.style.display = 'none'; phDesc.style.display = 'none';
                     phTitle.innerText = 'Trip Impact Report';
-                    phTitle.style.fontSize = '1.1rem';
-                    phTitle.style.textTransform = 'uppercase';
-                    phTitle.style.letterSpacing = '1px';
-                    phTitle.style.marginBottom = '25px';
-
+                    phTitle.style.fontSize = '1.1rem'; phTitle.style.textTransform = 'uppercase'; phTitle.style.letterSpacing = '1px'; phTitle.style.marginBottom = '25px';
                     resultPlaceholder.style.flex = 'initial';
-
                     holidayResults.classList.remove('hidden');
-                    // Trigger reflow for animation
                     void holidayResults.offsetWidth;
-                    holidayResults.style.opacity = '1';
-                    holidayResults.style.transform = 'translateY(0)';
+                    holidayResults.style.opacity = '1'; holidayResults.style.transform = 'translateY(0)';
                 }, 300);
-            } else {
-                resultPlaceholder.classList.add('hidden');
-                holidayResults.classList.remove('hidden');
-                holidayResults.style.opacity = '1';
-                holidayResults.style.transform = 'translateY(0)';
             }
         }
 
-        // Populate values
         document.getElementById('h-drop').innerText = `-${drop.toFixed(1)}%`;
-        document.getElementById('h-days-count').innerText = daysCount;
+        document.getElementById('h-start-pct').innerText = startPct.toFixed(1) + '%';
         document.getElementById('h-slots-lost').innerText = lostSlots;
-        document.getElementById('h-before-pct').innerText = currentPct.toFixed(1) + '%';
-        document.getElementById('h-after-pct').innerText = newPct.toFixed(1) + '%';
+        document.getElementById('h-before-pct').innerText = startPct.toFixed(1) + '%';
+        document.getElementById('h-after-pct').innerText = finalPct.toFixed(1) + '%';
 
-        // Animate comparison bars
         setTimeout(() => {
-            document.getElementById('before-bar').style.width = Math.min(currentPct, 100) + '%';
-            document.getElementById('after-bar').style.width = Math.min(newPct, 100) + '%';
+            document.getElementById('before-bar').style.width = Math.min(startPct, 100) + '%';
+            document.getElementById('after-bar').style.width = Math.min(finalPct, 100) + '%';
         }, 100);
 
-        // Color the drop value
         const dropEl = document.getElementById('h-drop');
         dropEl.style.color = drop > 10 ? '#dc2626' : drop > 5 ? '#f59e0b' : '#10b981';
 
-        // Verdict
         const verdict = document.getElementById('h-verdict');
         if (drop > 10) {
             verdict.className = 'impact-verdict verdict-danger';
-            verdict.innerHTML = `<strong>⚠️ High Impact!</strong> This trip will significantly hurt your attendance. Consider shortening it.`;
+            verdict.innerHTML = `<strong>⚠️ High Impact!</strong> Your attendance will drop significantly. You'll start the trip with ${startPct.toFixed(1)}% and end with ${finalPct.toFixed(1)}%.`;
         } else if (drop > 5) {
             verdict.className = 'impact-verdict verdict-warning';
-            verdict.innerHTML = `<strong>⚡ Moderate Impact.</strong> You'll lose noticeable ground. Make sure to attend all classes after.`;
+            verdict.innerHTML = `<strong>⚡ Moderate Impact.</strong> You'll go from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%. Be careful!`;
         } else if (lostSlots === 0) {
             verdict.className = 'impact-verdict verdict-safe';
-            verdict.innerHTML = `<strong>🎉 Zero Impact!</strong> No classes fall on your trip dates. Enjoy your break!`;
+            verdict.innerHTML = `<strong>🎉 Zero Impact!</strong> No classes fall on your trip dates. You'll stay at ${startPct.toFixed(1)}%. Enjoy!`;
         } else {
             verdict.className = 'impact-verdict verdict-safe';
-            verdict.innerHTML = `<strong>✅ Low Impact.</strong> This trip is manageable. You'll barely feel the difference.`;
+            verdict.innerHTML = `<strong>✅ Low Impact.</strong> Manageable drop from ${startPct.toFixed(1)}% to ${finalPct.toFixed(1)}%.`;
         }
 
-        setTimeout(() => {
-            holidayResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+        setTimeout(() => { holidayResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
     });
 });
+
