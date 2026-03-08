@@ -5,4 +5,4 @@ Allow: /
 User-agent: Mediapartners-Google
 Allow: /
 
-Sitemap: /sitemap.xml
+Sitemap: https://attendcalc.me/sitemap.xml
