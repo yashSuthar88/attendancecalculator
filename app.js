@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     actionMessage.innerHTML = `You can miss the next <span class="highlight-number missable">${missable}</span> class${missable > 1 ? 'es' : ''} and stay above ${goal}%.
                     <div class="predictor-suggestion success">
                         <span class="predictor-suggestion-title">Planning a trip?</span>
-                        <a href="holiday.html" class="predictor-suggestion-link">
+                        <a href="holiday" class="predictor-suggestion-link">
                             Plan your holidays efficiently 🌴 <span class="predictor-suggestion-arrow">→</span>
                         </a>
                     </div>`;
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 actionMessage.innerHTML = `You need to attend the next <span class="highlight-number needed">${needed}</span> class${needed > 1 ? 'es' : ''} to reach ${goal}%.
                 <div class="predictor-suggestion">
                     <span class="predictor-suggestion-title">Want to know when?</span>
-                    <a href="planner.html" class="predictor-suggestion-link">
+                    <a href="planner" class="predictor-suggestion-link">
                         Predict the exact date you'll hit ${goal}% 📅 <span class="predictor-suggestion-arrow">→</span>
                     </a>
                 </div>`;

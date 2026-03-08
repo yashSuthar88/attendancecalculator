@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p style="font-size: 0.9rem; line-height: 1.6; color: #94a3b8; margin: 0; font-weight: 500;">
                     We use cookies to personalize your experience and show relevant ads via Google AdSense. 
-                    <a href="privacy.html" style="color: #06b6d4; text-decoration: none; font-weight: 700;">More Info</a>
+                    <a href="privacy" style="color: #06b6d4; text-decoration: none; font-weight: 700;">More Info</a>
                 </p>
                 <div style="display: flex; gap: 12px;">
                     <button id="accept-cookies" style="

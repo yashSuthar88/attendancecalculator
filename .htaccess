@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Redirect /index.html to /
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^(.*)index\.html$ /$1 [L,R=301]
+
+# Redirect something.html to something (external redirect if user types .html manually)
+RewriteCond %{THE_REQUEST} \s/+(.+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [L,R=301]
+
+# Internally rewrite something to something.html (transparently serve the file)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]

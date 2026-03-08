@@ -1,9 +1,9 @@
-# 75%ATTENDANCE 🎓
+# ATTENDCALC 🎓
 
 ![Master Your Attendance](https://img.shields.io/badge/Status-Active-success)
 ![Tech Stack](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue)
 
-**[75%ATTENDANCE](https://75%ATTENDANCE/)** is a free, fast, and accurate attendance calculation and prediction tool designed specifically for students. It helps you track your attendance, plan holidays, and ensure you never fall below your target percentage.
+**[ATTENDCALC](https://ATTENDCALC/)** is a free, fast, and accurate attendance calculation and prediction tool designed specifically for students. It helps you track your attendance, plan holidays, and ensure you never fall below your target percentage.
 
 Built with a stunning, modern **glassmorphism** design aesthetic, it offers a fast, clean, and intuitive user experience entirely in the browser. 
 
@@ -49,7 +49,7 @@ This project runs entirely on the client side. No build steps, complex installat
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/75%ATTENDANCE.git
+   git clone https://github.com/your-username/ATTENDCALC.git
    ```
 2. **Open the project:**
    Simply open the folder and double-click `index.html` to run the website locally in any modern web browser. 
