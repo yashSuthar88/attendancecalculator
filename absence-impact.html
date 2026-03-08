@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Calculate your college attendance percentage instantly. Find out exactly how many classes you can skip or need to attend to reach your 75% target.">
+        content="Calculate how missing upcoming lectures will impact your overall college attendance percentage. Instantly see the drop in attendance.">
     <meta name="keywords"
-        content="college attendance calculator, how to calculate attendance percentage, how many classes can I skip, attendance tracker">
+        content="attendance impact calculator, miss classes calculator, attendance drop calculator, track attendance">
     <meta name="author" content="ATTENDCALC">
-    <title>College Attendance Calculator | How Many Classes Can I Skip?</title>
+    <title>Absence Impact Calculator | What if I miss classes?</title>
     <link rel="stylesheet" href="styles.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
@@ -26,11 +26,11 @@
         </a>
         <nav class="nav-links">
             <a href="/">Home</a>
-            <a href="calculator" class="active">Attendance Calculator</a>
-            <a href="planner">Attendance Predictor</a>
-            <a href="holiday">Holiday Planner</a>
-            <a href="impact">Absence Impact</a>
-            <a href="gpa-converter">CGPA to Percentage</a>
+            <a href="attendance-calculator">Attendance Calculator</a>
+            <a href="attendance-predictor">Attendance Predictor</a>
+            <a href="holiday-planner">Holiday Planner</a>
+            <a href="absence-impact" class="active">Absence Impact</a>
+            <a href="cgpa-to-percentage">CGPA to Percentage</a>
             <a href="docs">How to Use</a>
         </nav>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
@@ -47,13 +47,13 @@
         <a href="/"><span class="nav-icon">🏠</span> Home</a>
 
         <div class="nav-section-label">Attendance Tools</div>
-        <a href="calculator" class="active"><span class="nav-icon">📊</span> Attendance Calculator</a>
-        <a href="planner"><span class="nav-icon">📅</span> Attendance Predictor</a>
-        <a href="holiday"><span class="nav-icon">✈️</span> Holiday Planner</a>
-        <a href="impact"><span class="nav-icon">📉</span> Absence Impact</a>
+        <a href="attendance-calculator"><span class="nav-icon">📊</span> Attendance Calculator</a>
+        <a href="attendance-predictor"><span class="nav-icon">📅</span> Attendance Predictor</a>
+        <a href="holiday-planner"><span class="nav-icon">✈️</span> Holiday Planner</a>
+        <a href="absence-impact" class="active"><span class="nav-icon">📉</span> Absence Impact</a>
 
         <div class="nav-section-label">Academic Converters</div>
-        <a href="gpa-converter"><span class="nav-icon">🎓</span> CGPA to Percentage</a>
+        <a href="cgpa-to-percentage"><span class="nav-icon">🎓</span> CGPA to Percentage</a>
 
         <div class="nav-section-label">Support</div>
         <a href="docs"><span class="nav-icon">📚</span> How to Use</a>
@@ -69,33 +69,23 @@
 
     <div class="page-wrap">
         <div class="page-header">
-            <span class="page-badge">📊 Quick Check</span>
-            <h1>Attendance Calculator</h1>
-            <p>Find out your current standing and how many classes you can skip or need to attend.</p>
-        </div>
-
-        <!-- No Attendance Banner -->
-        <div class="no-attendance-alert hidden" id="no-attendance-alert">
-            <div class="alert-icon">⚠️</div>
-            <h3>No Attendance Recorded</h3>
-            <p>You have <strong>0%</strong> attendance. You haven't attended a single class out of <span
-                    id="no-att-total">0</span> held so far.</p>
-            <p class="alert-recovery" id="no-att-recovery"></p>
-            <button class="dismiss-btn" id="dismiss-alert-btn">Dismiss ✕</button>
+            <span class="page-badge">📉 Impact Check</span>
+            <h1>Absence Impact Calculator</h1>
+            <p>Find out exactly how your attendance percentage will drop if you miss upcoming lectures.</p>
         </div>
 
         <div class="panels">
             <!-- Left: Inputs -->
             <div class="glass">
                 <div class="panel-section">
-                    <h3 class="panel-label">📋 Your Numbers</h3>
+                    <h3 class="panel-label">📋 Current Standing</h3>
                     <div class="input-row">
                         <div class="input-field">
-                            <label for="attended">Attended</label>
+                            <label for="attended">Attended So Far</label>
                             <input type="number" id="attended" min="0" placeholder="e.g. 30">
                         </div>
                         <div class="input-field">
-                            <label for="total">Total Held</label>
+                            <label for="total">Total Held So Far</label>
                             <input type="number" id="total" min="1" placeholder="e.g. 40">
                         </div>
                     </div>
@@ -108,10 +98,10 @@
                 <div class="panel-divider"></div>
 
                 <div class="panel-section">
-                    <h3 class="panel-label">🎯 Your Goal</h3>
+                    <h3 class="panel-label">🔮 Future Scenarios</h3>
                     <div class="input-field">
-                        <label for="goal">Target Attendance (%)</label>
-                        <input type="number" id="goal" min="1" max="100" value="75">
+                        <label for="miss-upcoming">Number of Upcoming Lectures to Miss</label>
+                        <input type="number" id="miss-upcoming" min="1" placeholder="e.g. 5" value="1">
                     </div>
                 </div>
 
@@ -119,83 +109,62 @@
                     style="margin-top: 25px; padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border-left: 3px solid var(--primary);">
                     <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
                         <span style="color: var(--text); font-weight: 600; display: block; margin-bottom: 5px;">How it
-                            Works</span>Find out exactly how many upcoming classes you can skip, or how many
-                        back-to-back classes you must attend to catch up to your target!
+                            Works</span>Enter your current numbers and the number of consecutive upcoming classes you
+                        plan to
+                        skip. We'll show you exactly what your new attendance percentage will be.
                     </p>
                 </div>
 
                 <div style="margin-top: auto; padding-top: 25px;">
-                    <button id="calculate-btn">Calculate</button>
+                    <button id="calculate-btn">Calculate Impact</button>
                 </div>
             </div>
 
             <!-- Right: Results -->
             <div class="glass" style="display: flex; flex-direction: column; height: 100%; justify-content: center;">
                 <div class="result-placeholder" id="calc-placeholder" style="transition: all 0.5s ease; width: 100%;">
-                    <div class="placeholder-icon" id="ph-icon" style="transition: all 0.3s ease;">📊</div>
+                    <div class="placeholder-icon" id="ph-icon" style="transition: all 0.3s ease;">📉</div>
                     <h3 id="ph-title" style="transition: all 0.3s ease;">Ready to Calculate</h3>
-                    <p id="ph-desc" style="transition: all 0.3s ease;">Enter your numbers and hit Calculate to get your
-                        results.</p>
+                    <p id="ph-desc" style="transition: all 0.3s ease;">Enter your numbers and hit Calculate to see the
+                        impact.</p>
                 </div>
 
                 <div class="hidden" id="result-section"
                     style="opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); width: 100%;">
-                    <div class="result-row">
-                        <div class="circular-progress">
-                            <svg viewBox="0 0 100 100">
-                                <circle class="bg" cx="50" cy="50" r="45"></circle>
-                                <circle class="progress" cx="50" cy="50" r="45" id="progress-circle"></circle>
-                            </svg>
-                            <div class="percentage" id="percentage-display">0%</div>
+                    <div class="result-row"
+                        style="flex-direction: column; align-items: center; text-align: center; gap: 15px;">
+                        <div id="drop-display"
+                            style="font-size: 5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; transition: color 0.4s ease; text-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                            -0%
                         </div>
-                        <div class="result-text">
-                            <div class="status-message" id="status-message"></div>
-                            <div class="action-message" id="action-message"></div>
+                        <div class="result-text" style="margin-left: 0; width: 100%;">
+                            <div class="status-message" id="status-message"
+                                style="margin-bottom: 12px; font-size: 1.3rem;"></div>
+                            <div class="action-message" id="action-message" style="font-size: 1.05rem;"></div>
                         </div>
                     </div>
 
                     <div class="absent-stats">
-                        <h3>Breakdown</h3>
+                        <h3>Comparison</h3>
                         <div class="absent-grid">
                             <div class="absent-item">
-                                <span class="absent-value" id="missed-count">0</span>
-                                <span class="absent-label">Missed</span>
+                                <span class="absent-value" id="current-pct">0%</span>
+                                <span class="absent-label">Current</span>
                             </div>
                             <div class="absent-item">
-                                <span class="absent-value text-danger" id="absent-pct">0%</span>
-                                <span class="absent-label">Absent</span>
+                                <span class="absent-value text-danger" id="new-pct">0%</span>
+                                <span class="absent-label">Expected</span>
                             </div>
                             <div class="absent-item">
-                                <span class="absent-value" id="attended-count">0</span>
-                                <span class="absent-label">Present</span>
+                                <span class="absent-value" id="drop-pct" style="color: var(--warning);">0%</span>
+                                <span class="absent-label">Drop</span>
                             </div>
                             <div class="absent-item">
-                                <span class="absent-value" id="total-count">0</span>
-                                <span class="absent-label">Total</span>
+                                <span class="absent-value" id="new-total">0</span>
+                                <span class="absent-label">New Total Held</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass"
-            style="margin-bottom: 20px; padding: 25px; border-left: 4px solid var(--accent); background: var(--surface-light);">
-            <div style="display: flex; gap: 18px; align-items: flex-start;">
-                <div style="font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));">🎓</div>
-                <div>
-                    <h3 style="color: var(--text); font-size: 1.15rem; margin-bottom: 10px; font-weight: 700;">General
-                        Attendance Criteria</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 10px;">Most
-                        universities mandate a strict minimum of <strong>75% attendance</strong> to be eligible for
-                        end-semester examinations. Falling below this threshold typically results in an automatic
-                        academic detainment.</p>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">A relaxation of up to
-                        <strong>10%</strong> (bringing the minimum requirement to 65%) is generally only considered for
-                        severe medical emergencies or official representation in college-sanctioned events (like sports,
-                        cultural activities, or NSS/NCC). These exceptions always require valid documented certificates
-                        and prior administrative approvals.
-                    </p>
                 </div>
             </div>
         </div>
@@ -220,11 +189,11 @@
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <a href="/">Home</a>
-                    <a href="calculator">Attendance Calculator</a>
-                    <a href="planner">Attendance Predictor</a>
-                    <a href="holiday">Holiday Planner</a>
-                    <a href="impact">Absence Impact</a>
-                    <a href="gpa-converter">CGPA to Percentage</a>
+                    <a href="attendance-calculator">Attendance Calculator</a>
+                    <a href="attendance-predictor">Attendance Predictor</a>
+                    <a href="holiday-planner">Holiday Planner</a>
+                    <a href="absence-impact">Absence Impact</a>
+                    <a href="cgpa-to-percentage">CGPA to Percentage</a>
                     <a href="docs" style="color: var(--primary); font-weight: 600;">How to Use</a>
                 </div>
                 <div class="footer-col">
@@ -248,7 +217,7 @@
             <p>&copy; 2025 ATTENDCALC. Crafted with ❤️ for students everywhere.</p>
         </div>
     </footer>
-    <script src="app.js"></script>
+    <script src="impact.js"></script>
     <script>
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobile-nav');
