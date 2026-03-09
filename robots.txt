@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /about
+Disallow: /contact
+Disallow: /docs
+Disallow: /privacy
+Disallow: /terms
 
 # Google AdSense Crawler Exception
 User-agent: Mediapartners-Google
