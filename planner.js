@@ -226,6 +226,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==========================================
+    // Exam Schedule
+    // ==========================================
+    const examRanges = []; // [{start: Date, end: Date}]
+    const examStartInput = document.getElementById('exam-start-date');
+    const examEndInput = document.getElementById('exam-end-date');
+    const addExamBtn = document.getElementById('add-exam-range');
+    const examList = document.getElementById('exam-ranges-list');
+
+    function formatDateForTag(date) {
+        const d = String(date.getDate()).padStart(2, '0');
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const y = date.getFullYear();
+        return `${d}/${m}/${y}`;
+    }
+
+    function renderExamTags() {
+        if (!examList) return;
+        examList.innerHTML = examRanges.map((range, i) => {
+            return `<span class="exam-tag">${formatDateForTag(range.start)} - ${formatDateForTag(range.end)}<span class="exam-tag-remove" data-index="${i}">&times;</span></span>`;
+        }).join('');
+        examList.querySelectorAll('.exam-tag-remove').forEach(btn => {
+            btn.addEventListener('click', () => { examRanges.splice(parseInt(btn.dataset.index), 1); renderExamTags(); });
+        });
+    }
+
+    if (addExamBtn && examStartInput && examEndInput) {
+        addExamBtn.addEventListener('click', () => {
+            const start = parseDDMMYYYY(examStartInput.value.trim());
+            const end = parseDDMMYYYY(examEndInput.value.trim());
+            if (!start || !end) { alert('Please enter both start and end dates.'); return; }
+            if (end < start) { alert('End date cannot be before start date.'); return; }
+            examRanges.push({ start, end });
+            examStartInput.value = '';
+            examEndInput.value = '';
+            renderExamTags();
+        });
+    }
+
+    // Auto-format for exam inputs
+    if (examStartInput) {
+        examStartInput.addEventListener('input', function () {
+            let v = this.value.replace(/[^\d]/g, '');
+            if (v.length > 8) v = v.slice(0, 8);
+            if (v.length >= 5) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+            else if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+            this.value = v;
+        });
+    }
+    if (examEndInput) {
+        examEndInput.addEventListener('input', function () {
+            let v = this.value.replace(/[^\d]/g, '');
+            if (v.length > 8) v = v.slice(0, 8);
+            if (v.length >= 5) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+            else if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+            this.value = v;
+        });
+    }
+
     const attendedInput = document.getElementById('p-attended');
     const totalInput = document.getElementById('p-total');
     const goalInput = document.getElementById('p-goal');
@@ -357,6 +416,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Merge in college holidays
         collegeHolidays.forEach(d => { if (!activeHolidays.includes(d)) activeHolidays.push(d); });
 
+        let examOverlapDetected = false;
+        let examDatesFound = [];
+
         while ((tempAttended / tempTotal) * 100 < goal && daysPassed < MAX_DAYS) {
             daysPassed++;
             currentDate.setDate(currentDate.getDate() + 1);
@@ -380,6 +442,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (activeHolidays.includes(cm + '-' + cd) || activeHolidays.includes(cy + '-' + cm + '-' + cd)) slotsToday = 0;
             }
 
+            if (slotsToday > 0 && examRanges.length > 0) {
+                const isExam = examRanges.some(range => {
+                    const d = new Date(currentDate);
+                    d.setHours(0, 0, 0, 0);
+                    const s = new Date(range.start);
+                    s.setHours(0, 0, 0, 0);
+                    const e = new Date(range.end);
+                    e.setHours(0, 0, 0, 0);
+                    return d >= s && d <= e;
+                });
+                if (isExam) {
+                    slotsToday = 0;
+                    examOverlapDetected = true;
+                    const dateStr = formatDateForTag(currentDate);
+                    if (!examDatesFound.includes(dateStr)) examDatesFound.push(dateStr);
+                }
+            }
+
             if (slotsToday > 0) { tempAttended += slotsToday; tempTotal += slotsToday; actualDaysAttended++; }
         }
 
@@ -397,6 +477,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const finalPct = (Math.round((tempAttended / tempTotal) * 10000) / 100).toFixed(1);
             verdictDisplay.className = 'impact-verdict verdict-safe';
             verdictDisplay.innerHTML = '<strong>✅ Goal reachable!</strong> Attend all classes for the next ' + actualDaysAttended + ' college day' + (actualDaysAttended !== 1 ? 's' : '') + ' to hit ' + finalPct + '%.';
+        }
+
+        const examWarning = document.getElementById('p-exam-warning');
+        if (examWarning) {
+            if (examOverlapDetected) {
+                examWarning.style.display = 'block';
+                examWarning.innerHTML = `<strong>📝 Exam Schedule Alert:</strong> Your prediction path overlaps with your exam schedule (e.g., ${examDatesFound.slice(0, 3).join(', ')}${examDatesFound.length > 3 ? '...' : ''}). Classes were automatically excluded during these days.`;
+            } else {
+                examWarning.style.display = 'none';
+            }
         }
 
         setTimeout(() => {

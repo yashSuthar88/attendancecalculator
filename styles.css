@@ -380,9 +380,24 @@ button:active {
 .panels {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    gap: 30px;
     margin-bottom: 60px;
     align-items: stretch;
+}
+
+@media (min-width: 1025px) {
+    .page-wrap {
+        max-width: 1180px;
+    }
+    
+    .panels {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 40px;
+    }
+
+    .slots-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+    }
 }
 
 /* Panel Sections */
@@ -505,6 +520,12 @@ button:active {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-bottom: 30px;
+}
+
+@media (min-width: 1025px) {
+    .impact-stats.four-cols {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .impact-stat {
@@ -2456,4 +2477,40 @@ button:active {
     background: rgba(6, 182, 212, 0.2);
     border-color: var(--primary);
     transform: scale(1.05);
+}
+
+/* Exam Tags */
+.exam-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    color: #a855f7;
+    font-weight: 600;
+}
+
+.exam-tag-remove {
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.exam-tag-remove:hover {
+    color: var(--danger);
+}
+
+.badge-optional {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: none;
+    letter-spacing: 0;
 }

@@ -144,6 +144,41 @@ document.addEventListener('DOMContentLoaded', () => {
         collegeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addCollegeBtn.click(); } });
     }
 
+    // ==========================================
+    // Exam Schedule
+    // ==========================================
+    const examRanges = []; // [{start: Date, end: Date}]
+    const examStartInput = document.getElementById('exam-start-date');
+    const examEndInput = document.getElementById('exam-end-date');
+    const addExamBtn = document.getElementById('add-exam-range');
+    const examList = document.getElementById('exam-ranges-list');
+
+    function renderExamTags() {
+        if (!examList) return;
+        examList.innerHTML = examRanges.map((range, i) => {
+            return `<span class="exam-tag">${formatDateDDMMYYYY(range.start)} - ${formatDateDDMMYYYY(range.end)}<span class="exam-tag-remove" data-index="${i}">&times;</span></span>`;
+        }).join('');
+        examList.querySelectorAll('.exam-tag-remove').forEach(btn => {
+            btn.addEventListener('click', () => { examRanges.splice(parseInt(btn.dataset.index), 1); renderExamTags(); });
+        });
+    }
+
+    if (addExamBtn && examStartInput && examEndInput) {
+        addExamBtn.addEventListener('click', () => {
+            const start = parseDDMMYYYY(examStartInput.value.trim());
+            const end = parseDDMMYYYY(examEndInput.value.trim());
+            if (!start || !end) { alert('Please enter both start and end dates.'); return; }
+            if (end < start) { alert('End date cannot be before start date.'); return; }
+            examRanges.push({ start, end });
+            examStartInput.value = '';
+            examEndInput.value = '';
+            renderExamTags();
+        });
+    }
+
+    autoFormatDate(examStartInput);
+    autoFormatDate(examEndInput);
+
     // DD/MM/YYYY helpers
     function formatDateDDMMYYYY(date) {
         const dd = String(date.getDate()).padStart(2, '0');
@@ -263,6 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let weeklyOffDay = weeklyOff ? weeklyOff.value : 'none';
         let satOffType = saturdayOff ? saturdayOff.value : 'none';
 
+        let examOverlapDetected = false;
+        let examDatesFound = [];
+
         function getSlotsOnDate(date) {
             const dayOfWeek = date.getDay();
             let slots = schedule[dayOfWeek];
@@ -279,7 +317,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cm = String(date.getMonth() + 1).padStart(2, '0');
                 const cd = String(date.getDate()).padStart(2, '0');
                 const cy = date.getFullYear();
-                if (activeHolidays.includes(cy + '-' + cm + '-' + cd)) slots = 0;
+                const isoLong = cy + '-' + cm + '-' + cd;
+                const isoShort = cm + '-' + cd;
+                if (activeHolidays.includes(isoLong) || activeHolidays.includes(isoShort)) slots = 0;
+
+                // Check exam ranges
+                if (slots > 0) {
+                    const isExam = examRanges.some(range => {
+                        const d = new Date(date);
+                        d.setHours(0, 0, 0, 0);
+                        const s = new Date(range.start);
+                        s.setHours(0, 0, 0, 0);
+                        const e = new Date(range.end);
+                        e.setHours(0, 0, 0, 0);
+                        return d >= s && d <= e;
+                    });
+                    if (isExam) {
+                        slots = 0;
+                        examOverlapDetected = true;
+                        const dateStr = formatDateDDMMYYYY(date);
+                        if (!examDatesFound.includes(dateStr)) examDatesFound.push(dateStr);
+                    }
+                }
             }
             return slots;
         }
@@ -372,6 +431,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         verdict.className = verdictClass;
         verdict.innerHTML = verdictHtml;
+
+        const examWarning = document.getElementById('h-exam-warning');
+        if (examWarning) {
+            if (examOverlapDetected) {
+                examWarning.style.display = 'block';
+                examWarning.innerHTML = `<strong>📝 Exam Schedule Alert:</strong> Your selected trip dates overlap with your exam schedule (e.g., ${examDatesFound.slice(0, 3).join(', ')}${examDatesFound.length > 3 ? '...' : ''}). Classes are already marked as off during these days.`;
+            } else {
+                examWarning.style.display = 'none';
+            }
+        }
 
         setTimeout(() => { holidayResults.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
     });
