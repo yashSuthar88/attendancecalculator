@@ -359,7 +359,25 @@
                     </div>
 
                     <div class="impact-verdict" id="h-verdict"></div>
-                    <div id="h-75-warning" class="impact-verdict verdict-warning" style="display: none; margin-top: 15px; text-align: left;"></div>
+                    
+                    <div id="h-75-recovery" style="display: none; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border);">
+                        <div class="impact-header" style="margin-bottom: 20px;">
+                            <h3 style="font-size: 0.85rem; color: var(--warning);">Recovery Forecast (75%)</h3>
+                        </div>
+                        <div class="impact-stats" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
+                            <div class="impact-stat" style="border-color: rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.05);">
+                                <span class="impact-stat-value" id="h-rec-date" style="font-size: 1.2rem; color: var(--warning);">—</span>
+                                <span class="impact-stat-label">Recovery Date</span>
+                            </div>
+                            <div class="impact-stat" style="border-color: rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.05);">
+                                <span class="impact-stat-value" id="h-rec-slots" style="font-size: 1.2rem; color: var(--warning);">—</span>
+                                <span class="impact-stat-label">Slots Needed</span>
+                            </div>
+                        </div>
+                        <p id="h-rec-msg" style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 12px;"></p>
+                    </div>
+
+                    <div id="h-future-verdict" class="impact-verdict verdict-safe" style="display: none; margin-top: 15px; text-align: left;"></div>
                     <div id="h-exam-warning" class="impact-verdict verdict-warning" style="display: none; margin-top: 15px; text-align: left;"></div>
                 </div>
             </div>

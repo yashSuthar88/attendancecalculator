@@ -426,8 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
         verdict.className = verdictClass;
         verdict.innerHTML = verdictHtml;
 
-        const warning75 = document.getElementById('h-75-warning');
-        if (warning75) {
+        const recoveryCard = document.getElementById('h-75-recovery');
+        if (recoveryCard) {
             if (finalPct < 75) {
                 let recoveryDate = new Date(endDate);
                 recoveryDate.setDate(recoveryDate.getDate() + 1);
@@ -435,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let recAttended = futureAttended;
                 let recTotal = finalTotal;
                 let daysToRecover = 0;
+                let slotsNeeded = 0;
                 let targetReached = false;
                 
                 // safety limit to prevent infinite loops (max 365 days)
@@ -442,6 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const s = getSlotsOnDate(recoveryDate);
                     recAttended += s;
                     recTotal += s;
+                    slotsNeeded += s;
                     daysToRecover++;
                     
                     if (recTotal > 0 && (recAttended / recTotal) * 100 >= 75) {
@@ -451,17 +453,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     recoveryDate.setDate(recoveryDate.getDate() + 1);
                 }
                 
-                warning75.style.display = 'block';
+                recoveryCard.style.display = 'block';
+                const dateEl = document.getElementById('h-rec-date');
+                const slotsEl = document.getElementById('h-rec-slots');
+                const msgEl = document.getElementById('h-rec-msg');
+                
                 if (targetReached) {
-                    const recDateStr = recoveryDate.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'});
-                    warning75.innerHTML = `<strong>📉 Recovery Forecast:</strong> If you attend all classes after the trip, you will recover back to 75% on <strong>${recDateStr}</strong>.`;
-                    warning75.className = 'impact-verdict verdict-warning';
+                    dateEl.innerText = recoveryDate.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'});
+                    slotsEl.innerText = slotsNeeded;
+                    dateEl.style.color = 'var(--warning)';
+                    slotsEl.style.color = 'var(--warning)';
+                    msgEl.innerHTML = `Assuming you attend all <strong>${slotsNeeded}</strong> non-holiday classes after your trip.`;
                 } else {
-                    warning75.innerHTML = `<strong>📉 High Risk:</strong> Even with 100% attendance after the trip, you won't recover to 75% within the next year.`;
-                    warning75.className = 'impact-verdict verdict-danger';
+                    dateEl.innerText = '1+ Year';
+                    slotsEl.innerText = 'Too Many';
+                    dateEl.style.color = 'var(--danger)';
+                    slotsEl.style.color = 'var(--danger)';
+                    msgEl.innerHTML = `Even with perfect attendance, you won't recover within a year.`;
                 }
             } else {
-                warning75.style.display = 'none';
+                recoveryCard.style.display = 'none';
             }
         }
 
