@@ -24,6 +24,8 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/png" href="logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
     <script src="theme.js"></script>
 
     <link rel="canonical" href="https://attendcalc.me/holiday-planner">
@@ -357,7 +359,8 @@
                     </div>
 
                     <div class="impact-verdict" id="h-verdict"></div>
-                <div id="h-exam-warning" class="impact-verdict verdict-warning" style="display: none; margin-top: 15px; text-align: left;"></div>
+                    <div id="h-75-warning" class="impact-verdict verdict-warning" style="display: none; margin-top: 15px; text-align: left;"></div>
+                    <div id="h-exam-warning" class="impact-verdict verdict-warning" style="display: none; margin-top: 15px; text-align: left;"></div>
                 </div>
             </div>
         </div>
@@ -426,6 +429,7 @@
         hamburger.addEventListener('click', toggleNav);
         navOverlay.addEventListener('click', toggleNav);
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="cookie-consent.js"></script>
 </body>
 

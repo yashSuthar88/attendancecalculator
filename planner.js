@@ -143,16 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const collegeList = document.getElementById('college-holidays-list');
 
     // Auto-format DD/MM/YYYY
-    if (collegeInput) {
-        collegeInput.addEventListener('input', function () {
-            let val = this.value.replace(/[^\d]/g, '');
-            if (val.length > 8) val = val.slice(0, 8);
-            if (val.length >= 5) {
-                val = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
-            } else if (val.length >= 3) {
-                val = val.slice(0, 2) + '/' + val.slice(2);
-            }
-            this.value = val;
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr('#college-holiday-input, #exam-start-date, #exam-end-date, #p-target-date', {
+            dateFormat: 'd/m/Y',
+            allowInput: true,
+            disableMobile: true
         });
     }
 
@@ -265,25 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Auto-format for exam inputs
-    if (examStartInput) {
-        examStartInput.addEventListener('input', function () {
-            let v = this.value.replace(/[^\d]/g, '');
-            if (v.length > 8) v = v.slice(0, 8);
-            if (v.length >= 5) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
-            else if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-            this.value = v;
-        });
-    }
-    if (examEndInput) {
-        examEndInput.addEventListener('input', function () {
-            let v = this.value.replace(/[^\d]/g, '');
-            if (v.length > 8) v = v.slice(0, 8);
-            if (v.length >= 5) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
-            else if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-            this.value = v;
-        });
-    }
+    // removed old manual autoformat listeners
 
     const attendedInput = document.getElementById('p-attended');
     const totalInput = document.getElementById('p-total');

@@ -176,8 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    autoFormatDate(examStartInput);
-    autoFormatDate(examEndInput);
+    // autoFormatDate calls removed for exam inputs
 
     // DD/MM/YYYY helpers
     function formatDateDDMMYYYY(date) {
@@ -198,25 +197,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return d;
     }
 
-    // Auto-format DD/MM/YYYY
-    function autoFormatDate(input) {
-        if (!input) return;
-        input.addEventListener('input', function (e) {
-            let val = this.value.replace(/[^\d]/g, '');
-            if (val.length > 8) val = val.slice(0, 8);
-            if (val.length >= 5) val = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
-            else if (val.length >= 3) val = val.slice(0, 2) + '/' + val.slice(2);
-            this.value = val;
-        });
-    }
-
-    autoFormatDate(startInput);
-    autoFormatDate(endInput);
-    autoFormatDate(collegeInput);
-
     // Set default dates
     const today = new Date();
     const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 5);
+    if (startInput) startInput.value = formatDateDDMMYYYY(today);
+    if (endInput) endInput.value = formatDateDDMMYYYY(nextWeek);
+
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr('#start-date, #end-date, #college-holiday-input, #exam-start-date, #exam-end-date', {
+            dateFormat: 'd/m/Y',
+            allowInput: true,
+            disableMobile: true
+        });
+    }
     nextWeek.setDate(today.getDate() + 5);
     if (startInput) startInput.value = formatDateDDMMYYYY(today);
     if (endInput) endInput.value = formatDateDDMMYYYY(nextWeek);
@@ -431,6 +425,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         verdict.className = verdictClass;
         verdict.innerHTML = verdictHtml;
+
+        const warning75 = document.getElementById('h-75-warning');
+        if (warning75) {
+            if (finalPct < 75) {
+                let recoveryDate = new Date(endDate);
+                recoveryDate.setDate(recoveryDate.getDate() + 1);
+                
+                let recAttended = futureAttended;
+                let recTotal = finalTotal;
+                let daysToRecover = 0;
+                let targetReached = false;
+                
+                // safety limit to prevent infinite loops (max 365 days)
+                while (daysToRecover < 365) {
+                    const s = getSlotsOnDate(recoveryDate);
+                    recAttended += s;
+                    recTotal += s;
+                    daysToRecover++;
+                    
+                    if (recTotal > 0 && (recAttended / recTotal) * 100 >= 75) {
+                        targetReached = true;
+                        break;
+                    }
+                    recoveryDate.setDate(recoveryDate.getDate() + 1);
+                }
+                
+                warning75.style.display = 'block';
+                if (targetReached) {
+                    const recDateStr = recoveryDate.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'});
+                    warning75.innerHTML = `<strong>📉 Recovery Forecast:</strong> If you attend all classes after the trip, you will recover back to 75% on <strong>${recDateStr}</strong>.`;
+                    warning75.className = 'impact-verdict verdict-warning';
+                } else {
+                    warning75.innerHTML = `<strong>📉 High Risk:</strong> Even with 100% attendance after the trip, you won't recover to 75% within the next year.`;
+                    warning75.className = 'impact-verdict verdict-danger';
+                }
+            } else {
+                warning75.style.display = 'none';
+            }
+        }
 
         const examWarning = document.getElementById('h-exam-warning');
         if (examWarning) {
